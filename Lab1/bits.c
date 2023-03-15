@@ -178,7 +178,9 @@ NOTES:
  *   Rating: 1
  */
 int bitXor(int x, int y) {
-  return 2;
+  // (NOT x AND y) to create a bitmask for only the bits that aren't 1 in both x and y
+  // (NOT (NOT x AND NOT y)) this is an OR statement. AND that with the previous expression to get XOR
+  return ~(x & y) & ~(~x & ~y);
 }
 /* 
  * tmin - return minimum two's complement integer 
@@ -187,7 +189,7 @@ int bitXor(int x, int y) {
  *   Rating: 1
  */
 int tmin(void) {
-  return 2;
+  return 1 << 31;
 }
 //2
 /*
@@ -198,7 +200,9 @@ int tmin(void) {
  *   Rating: 1
  */
 int isTmax(int x) {
-  return 2;
+  int newx = ~(x ^ (x + 1)); // Should be all 0's
+  int allones = !(~x); // This is to check if x is all 1's
+  return !(newx | allones); 
 }
 /* 
  * allOddBits - return 1 if all odd-numbered bits in word set to 1
@@ -294,7 +298,26 @@ int howManyBits(int x) {
  *   Rating: 4
  */
 unsigned floatScale2(unsigned uf) {
-  return 2;
+  int exp = uf << 1 >> 24;
+  int sign = uf & (1 << 31);
+
+  // Is 0
+  if (!(uf & ~(1 << 31))) {
+    return uf;
+  }
+  
+  // Exponent is 0
+  if (!exp) {
+    return sign | (uf << 1);
+  }
+
+  // NaN
+  if (exp == 0xFF) {
+    return uf;
+  }
+
+  // Add one to exponent
+  return sign | ((exp + 1) << 23) | (uf & ~(~0 >> 23 << 23));
 }
 /* 
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
@@ -309,7 +332,12 @@ unsigned floatScale2(unsigned uf) {
  *   Rating: 4
  */
 int floatFloat2Int(unsigned uf) {
-  return 2;
+  if (~uf >> 22 << 23) { 
+      // Not NaN
+  }
+
+  // NaN
+  return 1 << 31;
 }
 /* #include "floatPower2.c" commented by Weinstock request by MCV 20210929-1619 */
 /* 
@@ -324,5 +352,15 @@ int floatFloat2Int(unsigned uf) {
  *   Rating: 2
  */
 unsigned floatNegate(unsigned uf) {
- return 2;
+  // Invert the bits, then set all bits not part of the exponent to 0
+  // If there's a 1 in the inverted exponent, then it's not NaN
+  if (~uf >> 22 << 23) { 
+    // Not NaN
+    // Take all bits but the sign bit
+    // OR that with the flipped sign bit
+    return (uf << 1 >> 1) | (~uf & (1 << 31));
+  }
+
+  // NaN
+  return uf;
 }
