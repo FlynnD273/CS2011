@@ -213,7 +213,17 @@ int isTmax(int x) {
  *   Rating: 2
  */
 int allOddBits(int x) {
-  return 2;
+  // Create a bitmask that set all even bits to 1
+  int evenbits = 0x55;                    // 0b00000000000000000000000001010101
+  evenbits = evenbits | (evenbits << 8);  // 0b00000000000000000101010101010101
+  evenbits = evenbits | (evenbits << 16); // 0b01010101010101010101010101010101
+
+  // OR x with the evenbits bitmask
+  x = x | evenbits;
+
+  // If all odd bits were set, then NOT x should be 0
+  x = ~x;
+  return !x;
 }
 /* 
  * negate - return -x 
@@ -223,7 +233,8 @@ int allOddBits(int x) {
  *   Rating: 2
  */
 int negate(int x) {
-  return 2;
+  // Hooray for two's complement
+  return ~x + 1;
 }
 //3
 /* 
@@ -236,7 +247,14 @@ int negate(int x) {
  *   Rating: 3
  */
 int isAsciiDigit(int x) {
-  return 2;
+  // Subtract 0x30 from x
+  int largerthan = x + (~0x30 + 1);
+
+  // Subtract x from 0x39
+  int lessthan = 0x39 + (~x + 1);
+
+  // If either are negative (largest bit is set) then it's out of range
+  return !((largerthan | lessthan) >> 31);
 }
 /* 
  * conditional - same as x ? y : z 
@@ -246,7 +264,10 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  return 2;
+  int cond = !x + (~1 + 1); // All 1's if x is true. All 0's if x is false, since all 1's rolls over to all 0's
+
+  // Just use this as a bitmask, pretty much
+  return (y & cond) | (z & ~cond);
 }
 /* 
  * isLessOrEqual - if x <= y  then return 1, else return 0 
@@ -256,7 +277,16 @@ int conditional(int x, int y, int z) {
  *   Rating: 3
  */
 int isLessOrEqual(int x, int y) {
-  return 2;
+  // If y - x is >= 0, then return 1
+  int diff = y + (~x + 1);
+
+  // Checks if x is negative and y is positive
+  int signs = (x >> 31) & (~y >> 31);
+
+  // Checks if x is positive and y is negative
+  int signs2 = (~x >> 31) & (y >> 31);
+
+  return (!(diff >> 31) | !diff | (signs & 1)) & !signs2;
 }
 //4
 /* 
@@ -268,7 +298,9 @@ int isLessOrEqual(int x, int y) {
  *   Rating: 4 
  */
 int logicalNeg(int x) {
-  return 2;
+  // This works because NOT x + 1 is equal to 0 only if x is 0
+  // So we check that the largest bit is not set for both NOT x + 1 and x
+  return ~(((~x + 1) | x) >> 31) & 1;
 }
 /* howManyBits - return the minimum number of bits required to represent x in
  *             two's complement
@@ -283,7 +315,28 @@ int logicalNeg(int x) {
  *  Rating: 4
  */
 int howManyBits(int x) {
-  return 0;
+  int bits16, bits8, bits4, bits2, bits1, bits0;
+  x ^= x >> 31; // If x is positive, leave untouched. If x is negative, x = -x -1
+
+  // Essentially a binary search to find the position of the most significant bit
+
+  bits16 = !!(x >> 16) << 4; // 1 if there's a 1 in the largest 16 bits
+  x >>= bits16; // Only shift if there was a set bit in teh leftmost 16 bits
+
+  bits8 = !!(x >> 8) << 3; // 1 if there's a 1 in the largest 8 bits
+  x >>= bits8; // Only shift if there was a set bit in teh leftmost 8 bits
+
+  bits4 = !!(x >> 4) << 2; // 1 if there's a 1 in the largest 4 bits
+  x >>= bits4; // Only shift if there was a set bit in teh leftmost 4 bits
+
+  bits2 = !!(x >> 2) << 1; // 1 if there's a 1 in the largest 2 bits
+  x >>= bits2; // Only shift if there was a set bit in teh leftmost 2 bits
+
+  bits1 = !!(x >> 1); // 1 if there's a 1 in the largest 1 bit
+  x >>= bits1; // Only shift if there was a set bit in teh leftmost 1 bit
+
+  bits0 = x; // 1 if there's a 1 in the largest 0  bits
+  return bits16 + bits8 + bits4 + bits2 + bits1 + bits0 + 1;
 }
 //float
 /* 
@@ -299,10 +352,10 @@ int howManyBits(int x) {
  */
 unsigned floatScale2(unsigned uf) {
   int exp = uf << 1 >> 24;
-  int sign = uf & (1 << 31);
+  int sign = uf & 0x80000000;
 
   // Is 0
-  if (!(uf & ~(1 << 31))) {
+  if (!(uf & 0x7FFFFFFF)) {
     return uf;
   }
   
@@ -317,7 +370,7 @@ unsigned floatScale2(unsigned uf) {
   }
 
   // Add one to exponent
-  return sign | ((exp + 1) << 23) | (uf & ~(~0 >> 23 << 23));
+  return sign | ((exp + 1) << 23) | (uf & 0x7FFFFF);
 }
 /* 
  * floatFloat2Int - Return bit-level equivalent of expression (int) f
@@ -332,12 +385,21 @@ unsigned floatScale2(unsigned uf) {
  *   Rating: 4
  */
 int floatFloat2Int(unsigned uf) {
-  if (~uf >> 22 << 23) { 
-      // Not NaN
-  }
+    int sign = uf >> 31; // Store the sign for later
+    int exp = uf << 1 >> 24; // Get just the exponent bits
+    int man = (uf & 0x7FFFFF) | 0x800000; // Get just the mantissa bits, plus the implicit 1
 
-  // NaN
-  return 1 << 31;
+    exp -= 127; // Shift for the exponent bias
+
+    if (exp < 0) return 0; // Return 0 if the exponent would leave the number less than 1 but larger than 0
+
+    if (exp > 23) return 0x80000000u; // Return 0x80000000u because the exponent would leave the int out of range
+
+    man >>= 23 - exp; // Shift the mantissa left by the exponent
+
+    if (sign) return ~man + 1; // Return -man if sign is negative
+
+    return man; // Return +man
 }
 /* #include "floatPower2.c" commented by Weinstock request by MCV 20210929-1619 */
 /* 
@@ -358,7 +420,7 @@ unsigned floatNegate(unsigned uf) {
     // Not NaN
     // Take all bits but the sign bit
     // OR that with the flipped sign bit
-    return (uf << 1 >> 1) | (~uf & (1 << 31));
+    return (uf << 1 >> 1) | (~uf & 0x80000000u);
   }
 
   // NaN
