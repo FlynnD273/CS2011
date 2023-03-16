@@ -264,7 +264,7 @@ int isAsciiDigit(int x) {
  *   Rating: 3
  */
 int conditional(int x, int y, int z) {
-  int cond = !x + (~1 + 1); // All 1's if x is true. All 0's if x is false, since all 1's rolls over to all 0's
+  int cond = !x + ~0; // All 1's if x is true. All 0's if x is false, since all 1's rolls over to all 0's
 
   // Just use this as a bitmask, pretty much
   return (y & cond) | (z & ~cond);
