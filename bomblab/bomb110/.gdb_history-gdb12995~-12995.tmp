@@ -1,0 +1,256 @@
+c
+ni
+ni
+ni
+ni
+ni
+x/10x $rsp
+x 0x000055555555b850
+x 0x000055555555b110
+x$rsp+0x20
+x $rsp+0x20
+x 0x000055555555b110
+x 0x000055555555b110+0x10
+x/2x 0x000055555555b110
+x/2x 0x000055555555b240
+disass
+x/2x $rbx+0x8
+x/x $rbx+0x8
+x/2x 0x000055555555b240
+x/10x rsp
+x/10x $rsp
+r sol.txt 
+c
+c
+c
+c
+r sol.txt 
+c
+c
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+x $rsp
+x/10x $rsp
+x/2x 0x000055555555b230
+x/2x 0x000055555555b270
+x/2x 0x000055555555b240
+x/2x 0x000055555555b110
+x/2x 0x000055555555b250
+x/2x 0x000055555555b260
+r sol.txt 
+c
+c
+c
+c
+r sol.txt 
+c
+c
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+x/10x $rsp
+r sol.txt 
+c
+c
+c
+b phase_7
+c
+r sol.txt 
+c
+c
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+b *0x555555556a3b
+info break
+del 7
+del 5
+del 2
+del 3
+info break
+save breakpoints b.txt 
+r sol.txt 
+x/10x $rsp
+r sol.txt 
+x/10x $rsp
+x/2x 0x000055555555b110
+x/2x 0x000055555555b240
+c
+r sol.txt 
+x/10x $rsp
+x/2x 0x000055555555b110
+r sol.txt 
+x/2x 0x000055555555b110
+x/10x $rsp
+x/2x 0x000055555555b110
+x/2x 0x000055555555b850
+r sol.txt 
+c
+r sol.txt 
+x/10x $rsp
+disass
+x/10x $rbx
+x/2x 0x000055555555b260
+x/10x $rbx-0x10
+x/10x $rbx-0x20
+x/2x 0x000055555555b230
+r sol.txt 
+ni
+ni
+ni
+ni
+x/10x $rbx
+x/10x $rbx-50
+x/10x $rbx-0x50
+x/10x $rbx-0x40
+x/2x 0x000055555555b240
+x/2x 0x000055555555b110
+x/2x 0x000055555555b260
+x/2x 0x000055555555b250
+r sol.txt 
+c
+c
+r sol.txt 
+c
+b phase_defused
+info break
+del 6
+save breakpoints b.txt 
+r sol.txt 
+c
+c
+c
+c
+c
+disass
+x 0x55555555b6ac
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+x $rcx
+x 0x5555b27000005555
+ni
+ni
+ni
+ni
+ni
+ni
+x $eax
+x/i 0x5555555562f0
+info break
+del 8
+b *0x55555555711f
+r sol.txt 
+next
+r sol.txt 
+x 0x55555555b7b0
+x/s 0x55555555b7b0
+r sol.txt 
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+b secret_phase
+del 9
+save breakpoints b.txt 
+r sol.txt 
+disass
+disass
+b *0x0000555555556b24
+del 10
+save breakpoints b.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+disass
+x 0x55555555b150
+r sol.txt 
+x 0x55555555b150
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+x/d $eax
+p/d $eax
+r sol.txt 
+r sol.txt 
+p/d $eax
+r sol.txt 
+p/d $eax
+r sol.txt 
+p/d $eax
+r sol.txt 
+p/d $eax
+r sol.txt 
+p/d $eax
+r sol.txt 
+p/d $eax
+r sol.txt 
+p/d $eax
+r sol.txt 
+p/d $eax
+r sol.txt 
+p/d $eax
+c
+r sol.txt 
+del 11
+r sol.txt 
+r sol.txt 
+q

@@ -1,0 +1,7 @@
+eax = 0
+r14 = rsp
+rsi = r14
+read_six_numbers()
+r12 = r14
+r15 = 1
+r13 = rsp

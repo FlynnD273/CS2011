@@ -1,0 +1,256 @@
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+b *0x555555556913
+info break
+del 7
+c
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+r sol.txt 
+ni
+ni
+ni
+ni
+ni
+x/hx $rsp+0x4
+r sol.txt 
+ni
+ni
+ni
+ni
+r i ecx
+r sol.txt 
+ni
+i r ecx
+x/hx $rsp+0x4
+r sol.txt 
+ni
+i r ecx
+x/hx $rsp+0x4
+r sol.txt 
+ni
+ni
+ni
+ni
+info break
+del 8
+b phase_6
+r sol.txt 
+r sol.txt 
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+i r eax
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+r sol.txt 
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+b *0x555555556978
+info break
+del 9
+save breakpoints b.txt 
+r sol.txt 
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+i r eax
+ni
+ni
+r sol.txt 
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+r sol.txt 
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+r sol.txt 
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+x/h $r15d
+x/h r15d
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+r sol.txt 
+r sol.txt 
+q
+source b.txt 
+r sol.txt 
+ni
+ni
+ni
+ni
+ni
+ni
+ni
+q
+source b.txt 
+b explode_bomb
+q
