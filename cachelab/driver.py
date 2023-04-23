@@ -47,6 +47,12 @@ def main():
     opts, args = p.parse_args()
     autograde = opts.autograde
 
+    print "Make all"
+    p = subprocess.Popen("make", 
+                         shell=True, stdout=subprocess.PIPE)
+    stdout_data = p.communicate()[0]
+    print(stdout_data)
+
     # Check the correctness of the cache simulator
     print "Part A: Testing cache simulator"
     print "Running ./test-csim"
